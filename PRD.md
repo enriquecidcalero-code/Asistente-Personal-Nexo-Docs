@@ -18,30 +18,42 @@ Nexo (Open Gravity) es un asistente de IA personal **local-first** diseñado par
 
 ## 🚀 Fases de Desarrollo
 
-### Fase 1: Gateway y Audio
+### Fase 1: Gateway Base y Motor LLM
 - Implementación de servidor WebSocket central.
+- Conexión primaria con Telegram y DM Pairing.
+- Lógica de failover Groq <> OpenRouter.
+
+### Fase 2: Nodos Locales y Navegador
+- Implementación de `system.run` y control de navegador (CDP).
+- Carga de habilidades dinámicas.
+
+### Fase 3: Seguridad Cloud (Tailscale)
+- Blindaje de red y protección de puertos mediante Tailscale Guard.
+- Orquestación de sesiones nativa.
+
+### Fase 4: Audio y Multimedia
 - Integración de ElevenLabs para respuesta por voz (TTS).
-- Conexión primaria con Telegram.
+- Procesamiento de archivos y audio en tiempo real.
 
-### Fase 2: Automatización y Contexto
-- Implementación de motor de sesiones persistentes.
-- Sistema de failover automático entre Groq y OpenRouter.
+### Fase 5: Live Canvas (A2UI) y Automatización
+- Dashboard en tiempo real con validación Zod.
+- Motor proactivo (CRON) para tareas programadas.
 
-### Fase 3: Live Canvas (A2UI)
-- Creación de un Dashboard en tiempo real que reacciona a los comandos de la IA.
-- Visualización de datos dinámica.
-
-### Fase 4: Zero Trust Node
+### Fase 6: Zero Trust Desktop Node
 - Separación de la lógica de ejecución en un "Nodo de Escritorio" certificado.
 - Handshake de seguridad mediante tokens.
 
-### Fase 5: Sentinel (Security Monitor)
+### Fase 7: Agente de Calidad Determinista (QA)
+- Auditores de seguridad y funcional nativos.
+- Diagnóstico inteligente solo ante fallos.
+
+### Fase 8: Sentinel (Security Monitor)
 - Monitorización de logs de sistema para detección de ataques.
 - Alertas inmediatas en Telegram ante anomalías.
 
-### Fase 6: MCP Integration (Fase Actual)
+### Fase 9: MCP Integration (Fase Actual)
 - Soporte para herramientas estandarizadas mediante el protocolo de Anthropic (MCP).
-- Allowlist de herramientas seguras.
+- Aduana de seguridad para herramientas de terceros.
 
 ## 📐 Alcance del Sistema
 ### Incluido:
