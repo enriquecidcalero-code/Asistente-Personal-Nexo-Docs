@@ -2,6 +2,22 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo.
 
+## [1.7.0] - 2026-03-14 (Mejoras MCP & Sentinel 2.0)
+
+### Sentinel 2.0 (Vigilancia Vital)
+- **Añadido**: **Protocolo Auto-Heal**: Capacidad de reanimación automática del sistema tras 3 fallos de salud (reinicio vía PM2 o limpieza de puertos).
+- **Añadido**: **Reporting VITAL**: Informes de salud en tiempo real (`getSystemStatus`) con métricas de hardware y servicios.
+-  **Mejorado**: **Anti-Ofuscación**: Motor de normalización que detecta comandos camuflados (ej. `s.u.d.o`, `r o o t`) eliminando ruidos y colapsando espaciados.
+- **Añadido**: **Threat Knowledge Base**: Base de datos de amenazas con traducciones humanas y estrategias de defensa sugeridas.
+
+### MCP Extensions (Habilidades Seguras)
+- **Añadido**: **Instancias Efímeras (TTL)**: Servidores MCP en modo "on-demand" que se cierran tras 60s de inactividad para optimizar RAM.
+- **Añadido**: **Interceptor DLP (Data Loss Prevention)**: Filtrado sanitario de inputs antes de enviar datos a herramientas externas.
+- **Añadido**: **Network Guard Egress**: Políticas de filtrado de red para las capas de extensión.
+- **Mejorado**: **Inyección Determinista**: Inyección inteligente de herramientas en el LLM con descripciones de prioridad (Force SQLite usage).
+
+---
+
 ## [1.6.0] - 2026-03-14 (Fase 9 - MCP Secure Integration)
 - **Añadido**: Secure MCP Client para consumo de herramientas externas.
 - **Añadido**: Aduana de herramientas via `mcp_allowlist.json`.
@@ -22,28 +38,3 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 - **Añadido**: Desktop Node desacoplado con handshake certificado.
 - **Añadido**: Intercepción de comandos prohibidos.
 - **Añadido**: Auditoría forense en `logs/node-audit.log`.
-
-## [1.3.0] - 2026-03-14 (Fase 5)
-- **Añadido**: Motor proactivo (CRON) para tareas programadas.
-- **Añadido**: Live Canvas (A2UI) con validación Zod.
-- **Añadido**: Superficie de Webhooks HTTP.
-
-## [1.2.0] - 2026-03-13 (Fase 4 - Audio & Memoria)
-- **Añadido**: Multi-Agent Orchestration y control de recursividad.
-- **Añadido**: Dynamic Skills Registry.
-- **Añadido**: ElevenLabs TTS integration.
-
-## [1.1.5] - 2026-03-13 (Fase 3 - Gateway CORE & Cloud Security)
-- **Añadido**: Central Control Plane: Orquestador WebSocket para eventos y sesiones.
-- **Añadido**: Tailscale Network Guard: Bloqueo automático si no hay anclaje seguro a 127.0.0.1.
-- **Añadido**: Session Dispatcher y Presence Engine.
-
-## [1.1.0] - 2026-03-13 (Fase 2)
-- **Añadido**: Nodos locales con `system.run` y `system.notify`.
-- **Añadido**: Control de navegador (CDP) via `NexoBrowser`.
-- **Añadido**: Módulo `NexoSecurity` integrado.
-
-## [1.0.0] - 2026-03-13 (Fase 1)
-- **Añadido**: Gateway WebSocket base.
-- **Añadido**: Integración con Groq y OpenRouter con Failover.
-- **Añadido**: Canal de Telegram con DM Pairing.
