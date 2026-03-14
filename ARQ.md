@@ -45,13 +45,18 @@ graph TD
 - **Secundario**: OpenRouter (Claude 3.5 Sonnet / GPT-4o) para tareas complejas o cuando Groq alcanza rate limits.
 - **Lógica**: Si el proveedor A devuelve error o tarda más de 10s, el sistema reintenta automáticamente con el proveedor B manteniendo el historial exacto.
 
-### 3. Desktop Node (`src/nodes/desktop-node.ts`)
+### 3. Persistencia de Datos (SQLite + FS)
+Nexo combina la flexibilidad del sistema de archivos con la robustez de una base de datos relacional:
+- **SQLite (`database.db`)**: Almacena datos estructurados como la configuración de usuarios, logs de eventos de alta frecuencia y relaciones entre agentes.
+- **FileSystem (`Sessions/`)**: Los hilos de conversación se guardan como archivos JSON independientes para facilitar la portabilidad y la inspección manual.
+
+### 4. Desktop Node (`src/nodes/desktop-node.ts`)
 Para aumentar la seguridad, las tareas que requieren acceso directo al hardware (terminal, pantalla, archivos) se ejecutan en un proceso separado que se conecta al Gateway.
 - **Handshake**: Requiere un `NEXO_NODE_TOKEN`.
 - **Sandbox**: Las operaciones están restringidas por un motor de reglas de seguridad.
 
-### 4. Sentinel (`src/security/sentinel.ts`)
-Un "watchdog" independiente que escanea los logs de auditoría en busca de:
+### 5. Sentinel (`src/security/sentinel.ts`)
+Un \"watchdog\" independiente que escanea los logs de auditoría en busca de:
 - Intención de ejecución de comandos prohibidos (`rm -rf`, `sudo`).
 - Accesos desde IPs no autorizadas.
 - Anomalías en el comportamiento de los agentes.
