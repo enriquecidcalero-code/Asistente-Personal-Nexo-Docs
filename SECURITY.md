@@ -1,41 +1,45 @@
-# 🔐 Modelo de Seguridad de Nexo
+# 🔐 Modelo de Seguridad de Nexo: La Fortaleza Progresiva
 
-Nexo está construido bajo la filosofía de que "La seguridad no es una capa, es el núcleo". Implementamos múltiples defensas profundas para proteger tu entorno local.
-
-## 🛡️ Niveles de Protección
-
-### 1. DM Pairing (Telegram)
-Nadie puede hablar con Nexo a menos que esté en la `allowlist.json`.
-- Al recibir un mensaje de un ID desconocido, Nexo guarda silencio pero genera un **Pairing Code** en la consola local.
-- El usuario debe proporcionar ese código exacto para ser vinculado.
-- Una vez vinculado, el ID es persistente.
-
-### 2. Zero Trust Desktop Node
-La ejecución de comandos no ocurre en el servidor web, sino en un proceso de nodo local separado.
-- **Handshake**: El nodo debe autenticarse con el Gateway usando un token asimétrico.
-- **Whitelist de Comandos**: Nexo tiene un motor que intercepta comandos de terminal. Si intentas ejecutar algo como `rm -rf /` o `sudo`, el comando es bloqueado instantáneamente antes de llegar al sistema operativo.
-
-### 3. Sentinel (Detección de Amenazas)
-El Sentinel es un watchdog pasivo que no consume recursos de IA.
-- Lee en tiempo real los logs en `~/.nexo/logs/node-audit.log`.
-- Utiliza reglas Regex avanzadas para detectar:
-    - Ofuscación de comandos (ej: `s.u.d.o`).
-    - Intentos de fuerza bruta en los puertos del Gateway.
-    - Caídas de servicios críticos.
-- Al detectar una amenaza, envía una **Alerta de Seguridad** de alta prioridad al canal de Telegram autorizado.
-
-### 4. Aduana de Herramientas MCP
-Con la integración del Model Context Protocol, Nexo puede usar herramientas de terceros. 
-- **Allowlist estricto**: Ninguna herramienta MCP puede ejecutarse si no ha sido autorizada previamente en `mcp_allowlist.json`.
-- **Validación de Datos**: Todos los inputs enviados a las herramientas son validados mediante esquemas Zod para prevenir inyecciones de código.
+Nexo está construido bajo la premisa de que **"La seguridad no se añade al final; es el cimiento sobre el que se construye la funcionalidad"**. Este documento explica cómo cada componente de Nexo contribuye a un ecosistema blindado.
 
 ---
 
-## 🔬 Auditoría y Logs
-La persistencia de seguridad se guarda en carpeta oculta del sistema para mayor protección:
-- `~/.nexo/workspace/allowlist.json`
-- `~/.nexo/logs/node-audit.log`
-- `~/.nexo/security/mcp_allowlist.json`
+## 🏛️ El Principio de "Privilegio Mínimo" y "Confianza Cero"
 
-> [!WARNING]
-> Nunca compartas tu `NEXO_NODE_TOKEN` ni los archivos dentro de `~/.nexo/security/`.
+En Nexo, partimos de un estado de **aislamiento absoluto**. Cada nueva "habilidad" o canal de comunicación que abrimos debe justificar su existencia y pasar por múltiples capas de validación.
+
+### 🛡️ Nivel 1: El Perímetro Humano (DM Pairing)
+Nadie puede interactuar con el cerebro de Nexo sin una validación física previa.
+*   **Mecanismo**: Si un ID de Telegram desconocido contacta al bot, Nexo genera un código efímero en la **terminal física del propietario**. Solo si ese código se devuelve correctamente, se añade a la `allowlist.json`.
+*   **Objetivo**: Evitar accesos no autorizados incluso si el bot es descubierto en la red de Telegram.
+
+### 🛡️ Nivel 2: La Red Invisible (Tailscale Guard)
+El Gateway de Nexo está diseñado para ser invisible en la Internet pública.
+*   **Mecanismo**: El sistema monitoriza las interfaces de red. Si detecta que no está bajo la protección de Tailscale o protocolos seguros, entra en modo **Lockdown**.
+*   **Objetivo**: Eliminar la superficie de ataque frente a escaneos de puertos globales.
+
+### 🛡️ Nivel 3: El Brazo Ejecutor Blindado (Desktop Node)
+El servidor que habla contigo no es el mismo que ejecuta tus archivos.
+*   **Mecanismo**: El **Desktop Node** certificado opera de forma independiente. Antes de ejecutar cualquier comando de terminal, un motor de reglas nativo analiza la cadena de texto.
+*   **Bloqueo Preventivo**: Si detecta comandos como `sudo`, `rm`, `mkfs`, o redirecciones de streams peligrosas, el comando muere antes de tocar el Shell.
+*   **Objetivo**: Contener posibles fugas de lógica del LLM que pudieran intentar dañar el sistema de archivos.
+
+### 🛡️ Nivel 4: Vigilancia Sentinel (Detección de Anomalías)
+Incluso con muros altos, necesitamos un centinela.
+*   **Mecanismo**: Un watchdog pasivo analiza los logs forenses (`node-audit.log`) cada segundo. Utiliza patrones heurísticos para detectar **Ofuscación** (ej. `s.u.d.o`, encoded strings) o comportamientos anómalos.
+*   **Objetivo**: Detección y respuesta inmediata ante ataques persistentes o bugs de seguridad.
+
+### 🛡️ Nivel 5: Aduana de Herramientas MCP
+La expansión de Nexo mediante el protocolo MCP se realiza bajo un modelo de **Lista Blanca**.
+*   **Mecanismo**: Cada servidor MCP externo debe estar registrado en la `mcp_allowlist.json`. Sin esta firma electrónica, la IA tiene prohibido por código invocar cualquier función externa.
+*   **Objetivo**: Garantizar que la IA solo use herramientas seguras y aprobadas por el humano.
+
+---
+
+## 🔬 Capas de Auditoría
+Nexo mantiene un rastro forense inalterable en:
+*   `~/.nexo/logs/node-audit.log`: Cada comando, cada respuesta, cada éxito y cada bloqueo.
+*   `~/.nexo/security/`: Almacén de tokens de sesión y certificados de nodo.
+
+> [!IMPORTANT]
+> Nexo ha sido diseñado para que, incluso en el caso hipotético de una brecha en la capa de IA, el sistema operativo subyacente permanezca protegido por reglas deterministas e inviolables.
