@@ -4,48 +4,57 @@
 
 Bienvenido al repositorio oficial de documentación del **Asistente Personal Nexo (Open Gravity)**. Este proyecto es un sistema de orquestación de IA avanzado, diseñado para ejecutarse localmente proporcionando máxima privacidad, control y una arquitectura de confianza cero.
 
-## 🎯 ¿Qué es Nexo?
+---
 
-Nexo es un **Gateway (Pasarela)** inteligente que unifica múltiples canales de comunicación (Telegram, WebSockets), motores de inteligencia artificial (Groq, OpenRouter) y herramientas del sistema local en una única interfaz cohesiva.
+## 🛡️ Filosofía de Desarrollo: Seguridad Total por Diseño
 
-### Pilares Fundamentales
-- **Privacidad Total**: Procesamiento local-first y cifrado de datos.
-- **Resiliencia**: Sistema de failover automático entre proveedores de LLM.
-- **Confianza Cero (Zero Trust)**: Handshake certificado entre nodos y gateway.
-- **Modularidad**: Habilidades y herramientas cargables dinámicamente.
+A diferencia de otros asistentes que priorizan la funcionalidad y luego intentan "parchear" la seguridad, Nexo ha sido construido con una **mentalidad de Fortificado Progresivo**.
+
+Nuestra base estratégica ha sido:
+1.  **Restricción Total (Fase 1)**: Comenzar en un entorno completamente sellado donde nada puede entrar ni salir sin autorización explícita (DM Pairing).
+2.  **Base Robusta**: Crear un núcleo (Gateway) que no confía en nadie, ni siquiera en el nodo que ejecuta los comandos.
+3.  **Apertura Controlada**: A medida que añadimos habilidades (Navegación, Audio, MCP), cada una pasa por una "aduana" de seguridad (Sentinel, Allowlists, Zod Validation) para asegurar que el sistema nunca pierda su integridad.
+
+---
+
+## 🚀 Análisis Detallado de Fases
+
+Nexo ha evolucionado a través de 9 fases críticas, cada una añadiendo una capa de blindaje:
+
+### [Fase 1-2] El Sistema Nervioso y el Perímetro
+*   **Seguridad**: Implementación del **DM Pairing**. El sistema ignora cualquier comunicación externa a menos que el usuario realice un apretón de manos físico con el código generado en la consola local.
+*   **Impacto**: Blindaje total contra extraños desde el primer minuto.
+
+### [Fase 3-4] Aislamiento de Red y Memoria
+*   **Seguridad**: Integración de **Tailscale Network Guard**. Nexo solo escucha en interfaces seguras y detecta si está siendo expuesto a la red pública sin protección.
+*   **Impacto**: Invisibilidad en la red pública mientras se mantiene acceso remoto seguro.
+
+### [Fase 5] Integridad de Datos e Interfaz
+*   **Seguridad**: Validación estricta con **Zod** para el Live Canvas. Cualquier dato visual o comando debe cumplir un esquema rígido.
+*   **Impacto**: Prevención de ataques de inyección en la capa de interfaz de usuario.
+
+### [Fase 6-7] Confianza Cero (Zero Trust) y Auditoría
+*   **Seguridad**: Creación del **Desktop Node**. Desacoplamos la ejecución del Gateway. El nodo requiere un token único (`NEXO_NODE_TOKEN`) y tiene un motor nativo que bloquea comandos peligrosos (`sudo`, `rm`) antes de que se ejecuten.
+*   **Impacto**: Si el Gateway fuera comprometido, el atacante no podría ejecutar comandos destructivos en el SO.
+
+### [Fase 8] Sentinel: Vigilancia Proactiva
+*   **Seguridad**: El módulo **Sentinel** escanea logs forenses en tiempo real buscando anomalías u ofuscación de comandos.
+*   **Impacto**: Detección inmediata de intentos de intrusión y alertas automáticas por Telegram.
+
+### [Fase 9] Aduana de Herramientas (MCP)
+*   **Seguridad**: Implementación de una **Aduana de Herramientas** para el protocolo MCP. Ninguna IA puede usar una herramienta que no esté explícitamente permitida en la lista blanca de seguridad.
+*   **Impacto**: Control total sobre las "habilidades" que la IA puede invocar, evitando el uso accidental de APIs costosas o peligrosas.
 
 ---
 
 ## 🗺️ Guía de Documentación
 
-Para entender cómo funciona Nexo y qué hemos construido hasta ahora, te recomendamos seguir este orden:
-
-1. [**📋 PRD (Requisitos)**](PRD.md): Definición del producto, objetivos y visión.
-2. [**🏗️ Arquitectura**](ARQ.md): Diagramas técnicos y stack tecnológico.
-3. [**📅 Plan Maestro**](PLAN.md): Roadmap de fases y estado actual.
-4. [**🔐 Seguridad**](SECURITY.md): Detalles del sistema Sentinel, Pairing y protección de nodo.
-5. [**📜 Changelog**](CHANGELOG.md): Historial detallado de todas las versiones y mejores implementadas.
+1. [**📋 PRD (Requisitos)**](PRD.md): Definición detallada, objetivos y visión del producto.
+2. [**🏗️ Arquitectura**](ARQ.md): Diagramas técnicos y stack tecnológico (Node/TS/pnpm).
+3. [**📅 Plan Maestro**](PLAN.md): Roadmap histórico y próximos hitos.
+4. [**🔐 Seguridad**](SECURITY.md): El manual profundo de Sentinel, Node Protection y Pairing.
+5. [**📜 Changelog**](CHANGELOG.md): Historial de versiones.
 
 ---
 
-## 🚀 Estado Actual: Fase 9 (MCP)
-
-Actualmente, Nexo se encuentra en su **Fase 9**, lo que significa que ya es capaz de:
-- [x] Gestión de seguridad via **Sentinel** con alertas proactivas.
-- [x] Integración de **MCP (Model Context Protocol)** para usar herramientas externas.
-- [x] Control de **Desktop Node** certificado.
-- [x] Interfaz de visualización **Live Canvas**.
-- [x] Comunicación bidireccional segura por **Telegram**.
-
----
-
-## 🛠️ Configuración Rápida (Overview)
-
-Nexo utiliza un sistema de persistencia local en `~/.nexo/` que contiene:
-- `workspace/`: Sesiones, allowlist y configuración.
-- `logs/`: Auditoría forense detallada.
-- `security/`: Certificados y tokens de seguridad.
-
----
-
-*Documentación redactada por Antigravity (IA).*
+*Documentación mantenida y evolucionada por Antigravity (IA).*
