@@ -4,31 +4,32 @@ Este documento detalla el progreso histórico y los próximos pasos en el desarr
 
 ## ✅ Hitos Alcanzados (Total: 9 Fases)
 
-### [Fase 1-3] El Cimiento
+### [Fase 1-2] El Cimiento
 - [x] Gateway WebSocket funcional.
 - [x] Motor de sesiones persistentes.
 - [x] Integración de Telegram con Pairing seguro.
-- [x] Lógica de orquestación de agentes básica.
+- [x] Nodos locales con `system.run` y `system.notify`.
 
-### [Fase 4-5] Resiliencia y Visualización
-- [x] Motor de Failover Groq <> OpenRouter.
+### [Fase 3-4] Seguridad y Audio
+- [x] **Tailscale Network Guard**: Blindaje de red y protección de puertos.
 - [x] ElevenLabs Audio Integration (TTS).
+- [x] Orquestación de sesiones nativa para enrutamiento multi-agente.
+
+### [Fase 5] Visualización y Proactividad
 - [x] **Live Canvas (A2UI)**: Dashboard interactivo para visualización de herramientas.
+- [x] Motor proactivo (CRON) para resúmenes matinales y alertas.
 
 ### [Fase 6-7] Confianza Cero y Calidad
-- [x] **Desktop Node**: Ejecución delegada en nodo local certificado.
-- [x] HANDSHAKE de seguridad mediante tokens e intercepción de comandos.
-- [x] **QA Agent**: Diagnóstico determinista de fallos del sistema sin dependencia exclusiva de LLM.
+- [x] **Desktop Node**: Ejecución delegada en nodo local certificado con intercepción de comandos peligrosos.
+- [x] **QA Agent**: Diagnóstico determinista (Security & Functional) sin dependencia exclusiva de LLM.
 
 ### [Fase 8] Sentinel - Seguridad Pasiva
-- [x] Vigilancia 24/7 de logs de auditoría.
-- [x] Detección automatizada de intentos de intrusión y comandos peligrosos.
-- [x] Alertas críticas por Telegram.
+- [x] Vigilancia 24/7 de logs de auditoría para detección de anomalías.
+- [x] Alertas críticas por Telegram automáticas.
 
-### [Fase 9] MCP - Integración Universal
+### [Fase 9] MCP - Integración Universal (Fase Actual)
 - [x] Cliente seguro para **Model Context Protocol (MCP)**.
-- [x] Aduana de seguridad para herramientas de terceros (`mcp_allowlist.json`).
-- [x] Circuit breaker para servidores MCP inestables.
+- [x] Aduana de seguridad (`mcp_allowlist.json`) y Circuit Breaker para estabilidad.
 
 ---
 
