@@ -22,28 +22,20 @@ Nuestra base estratégica ha sido:
 Nexo ha evolucionado a través de 9 fases críticas, cada una añadiendo una capa de blindaje:
 
 ### [Fase 1-2] El Sistema Nervioso y el Perímetro
-*   **Seguridad**: Implementación del **DM Pairing**. El sistema ignora cualquier comunicación externa a menos que el usuario realice un apretón de manos físico con el código generado en la consola local.
+*   **Seguridad**: Implementación del **DM Pairing**. El sistema protege el acceso mediante un código físico generado localmente.
 *   **Impacto**: Blindaje total contra extraños desde el primer minuto.
 
 ### [Fase 3-4] Aislamiento de Red y Memoria
-*   **Seguridad**: Integración de **Tailscale Network Guard**. Nexo solo escucha en interfaces seguras y detecta si está siendo expuesto a la red pública sin protección.
+*   **Seguridad**: Integración de **Tailscale Network Guard**. Nexo solo escucha en interfaces seguras y detecta exposiciones accidentales.
 *   **Impacto**: Invisibilidad en la red pública mientras se mantiene acceso remoto seguro.
 
-### [Fase 5] Integridad de Datos e Interfaz
-*   **Seguridad**: Validación estricta con **Zod** para el Live Canvas. Cualquier dato visual o comando debe cumplir un esquema rígido.
-*   **Impacto**: Prevención de ataques de inyección en la capa de interfaz de usuario.
-
 ### [Fase 6-7] Confianza Cero (Zero Trust) y Auditoría
-*   **Seguridad**: Creación del **Desktop Node**. Desacoplamos la ejecución del Gateway. El nodo requiere un token único (`NEXO_NODE_TOKEN`) y tiene un motor nativo que bloquea comandos peligrosos (`sudo`, `rm`) antes de que se ejecuten.
-*   **Impacto**: Si el Gateway fuera comprometido, el atacante no podría ejecutar comandos destructivos en el SO.
+*   **Seguridad**: Creación del **Desktop Node**. Desacoplamos la ejecución del Gateway. El nodo intercepta comandos peligrosos (`sudo`, `rm`) mediante un motor de reglas nativo.
+*   **Impacto**: Separación física y lógica entre la "inteligencia" y la "ejecución de comandos".
 
-### [Fase 8] Sentinel: Vigilancia Proactiva
-*   **Seguridad**: El módulo **Sentinel** escanea logs forenses en tiempo real buscando anomalías u ofuscación de comandos.
-*   **Impacto**: Detección inmediata de intentos de intrusión y alertas automáticas por Telegram.
-
-### [Fase 9] Aduana de Herramientas (MCP)
-*   **Seguridad**: Implementación de una **Aduana de Herramientas** para el protocolo MCP. Ninguna IA puede usar una herramienta que no esté explícitamente permitida en la lista blanca de seguridad.
-*   **Impacto**: Control total sobre las "habilidades" que la IA puede invocar, evitando el uso accidental de APIs costosas o peligrosas.
+### [Fase 8-9] Vigilancia Proactiva y Aduana de Herramientas (MCP)
+*   **Seguridad**: El módulo **Sentinel** escanea logs forenses en tiempo real y la **Aduana MCP** permite/deniega el uso de herramientas externas.
+*   **Impacto**: Control total y monitorización pasiva 24/7 de cada acción del sistema.
 
 ---
 
@@ -51,9 +43,10 @@ Nexo ha evolucionado a través de 9 fases críticas, cada una añadiendo una cap
 
 1. [**📋 PRD (Requisitos)**](PRD.md): Definición detallada, objetivos y visión del producto.
 2. [**🏗️ Arquitectura**](ARQ.md): Diagramas técnicos y stack tecnológico (Node/TS/pnpm).
-3. [**📅 Plan Maestro**](PLAN.md): Roadmap histórico y próximos hitos.
-4. [**🔐 Seguridad**](SECURITY.md): El manual profundo de Sentinel, Node Protection y Pairing.
-5. [**📜 Changelog**](CHANGELOG.md): Historial de versiones.
+3. [**🧠 Fundamentos Técnicos**](FUNDAMENTOS.md): **[NUEVO]** Explicación profunda de la ingeniería: Gateway, Motores LLM, Failover y Lógica de Nodos.
+4. [**📅 Plan Maestro**](PLAN.md): Roadmap histórico y próximos hitos del proyecto.
+5. [**🔐 Seguridad**](SECURITY.md): El manual profundo de Sentinel, Node Protection y Pairing.
+6. [**📜 Changelog**](CHANGELOG.md): Historial de versiones y mejoras implementadas.
 
 ---
 
