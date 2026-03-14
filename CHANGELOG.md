@@ -12,6 +12,12 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 - **Añadido**: Alertas en Telegram ante intentos de intrusión.
 - **Añadido**: Threat Knowledge Base local.
 
+## [1.4.5] - 2026-03-14 (Fase 7 - Agente de Calidad Determinista)
+- **Añadido**: Deterministic Security Auditor: Chequeo nativo de permisos y integridad de secretos (.env).
+- **Añadido**: Functional Auditor: Monitorización de puertos vitales (Port 3000) y métricas de RAM/Heap.
+- **Añadido**: Intelligent Diagnostics: Activación del LLM solo ante fallos detectados.
+- **Añadido**: QALogger: Persistencia estructurada de auditorías.
+
 ## [1.4.0] - 2026-03-14 (Fase 6 - Zero Trust Desktop Node)
 - **Añadido**: Desktop Node desacoplado con handshake certificado.
 - **Añadido**: Intercepción de comandos prohibidos.
@@ -26,6 +32,11 @@ Todos los cambios notables en este proyecto serán documentados en este archivo.
 - **Añadido**: Multi-Agent Orchestration y control de recursividad.
 - **Añadido**: Dynamic Skills Registry.
 - **Añadido**: ElevenLabs TTS integration.
+
+## [1.1.5] - 2026-03-13 (Fase 3 - Gateway CORE & Cloud Security)
+- **Añadido**: Central Control Plane: Orquestador WebSocket para eventos y sesiones.
+- **Añadido**: Tailscale Network Guard: Bloqueo automático si no hay anclaje seguro a 127.0.0.1.
+- **Añadido**: Session Dispatcher y Presence Engine.
 
 ## [1.1.0] - 2026-03-13 (Fase 2)
 - **Añadido**: Nodos locales con `system.run` y `system.notify`.
