@@ -12,55 +12,55 @@ Nexo no es un "producto terminado", es una **evolución de seguridad**. Nuestra 
 
 ## ✅ Hitos Alcanzados: El Camino de la Seguridad
 
-### [Fase 1-2] Los Cimientos del Bunker
-*   **Hitos**: Creación del Gateway WebSocket, Motor LLM con Failover y Módulo Telegram.
-*   **Enfoque de Seguridad**: El sistema nace "ciego y sordo" para el mundo exterior. Solo responde a través de un **Apretón de Manos (Pairing)** validado localmente.
-*   **Estado**: 100% Funcional.
+### [Fase 1-9] Los Cimientos y la Seguridad Base
 
-### [Fase 3-4] El Blindaje de Red y Multimodalidad
-*   **Hitos**: Integración de **Tailscale**, enrutamiento de sesiones y audio TTS.
-*   **Enfoque de Seguridad**: Se implementa el **Network Guard** que bloquea el sistema si detecta una IP pública no autorizada. El audio se maneja en flujos aislados para evitar fugas de datos.
-*   **Estado**: 100% Funcional.
+* **Hitos**: Gateway WebSockets, Tailscale, ElevenLabs, Live Canvas, Desktop Node y MCP Integration.
+* **Enfoque de Seguridad**: Establecimiento del perímetro, Zero Trust Desktop Node y Aduana MCP.
+* **Estado**: 100% Funcional.
 
-### [Fase 5] El Espejo Seguro (A2UI)
-*   **Hitos**: Dashboard **Live Canvas** y motor proactivo (CRON).
-*   **Enfoque de Seguridad**: Introducción de esquemas **Zod**. Ningún dato puede pintarse en el canvas ni ningún comando puede ser enviado desde él si no cumple con el contrato de integridad definido.
-*   **Estado**: 100% Funcional.
+### [Fase 10-11] Gestión de Secretos y Monitoreo Cognitivo
 
-### [Fase 6-7] La Delegación de Confianza (Zero Trust)
-*   **Hitos**: **Desktop Node** certificado y **Agente de QA** Determinista.
-*   **Enfoque de Seguridad**: Este es el mayor salto. Separamos la "mente" (Gateway) del "brazo" (Nodo). El brazo tiene su propio cerebro de seguridad que bloquea proactivamente comandos de terminal sensibles (`rm`, `sudo`, `mv`). El Agente de QA audita el entorno cada 60 segundos buscando brechas.
-*   **Estado**: 100% Funcional.
+* **Hitos**: Nexo Vault (OAuth) y Brain Monitor Dashboard.
+* **Enfoque de Seguridad**: Cifrado local de tokens y visibilidad total de latencias de IA.
+* **Estado**: 100% Funcional.
 
-### [Fase 8] El Ojo que todo lo ve (Sentinel)
-*   **Hitos**: Sistema Sentinel y Alertas de Telegram.
-*   **Enfoque de Seguridad**: **Seguridad Pasiva**. Un guardián que analiza los logs forenses buscando patrones de ataque u ofuscación, alertando al usuario al instante.
-*   **Estado**: 100% Funcional.
+### [Fase 21-21.6] Hermes: Evolución y Trazabilidad
 
-### [Fase 9] La Aduana Universal (MCP)
-*   **Hitos**: Cliente MCP Seguro y Aduana de Herramientas.
-*   **Enfoque de Seguridad**: Las herramientas externas son inherentemente peligrosas. Hemos creado una **Aduana Digital** (`mcp_allowlist.json`). Si una herramienta no está pre-aprobada por el humano, la IA no puede usarla, por muy persuasiva que sea.
-*   **Estado**: fase actual completa.
+* **Hitos**: Migración a **grammY**, Throttler, Context Envelope y Trazabilidad de Origen.
+* **Enfoque de Seguridad**: Aislamiento de memoria por hilo (`provider_channel_thread`) y normalización de mensajes.
+* **Estado**: 100% Funcional.
+
+### [Fase 21.5] Soberanía de Datos (Local SQLite)
+
+* **Hitos**: Migración completa de Firebase a **SQLite Local** (`better-sqlite3`).
+* **Enfoque de Seguridad**: Eliminación de dependencias de nube para datos sensibles. Persistencia 100% privada.
+* **Estado**: 100% Funcional.
+
+### [Fase 22-23] Terminal Soberano y Telemetría Real
+
+* **Hitos**: Panel de control v2.0 con telemetría de hardware (CPU/RAM deltas).
+* **Enfoque de Seguridad**: Interface de grado militar para el control total de la infraestructura.
+* **Estado**: 100% Funcional.
 
 ---
 
 ## 🚧 Próximos Pasos: Inteligencia con Seguridad Vectorial
 
-### Fase 10: Memoria a Largo Plazo Sometida a Auditoría
-*   [ ] Integración de Base de Datos Vectorial local.
-*   [ ] Indexación de archivos con permisos granulares (Solo carpetas autorizadas).
-*   [ ] Auditoría de "olvido" (GDPR local).
+### Fase 24: RAG Avanzado y Memoria Semántica
 
-### Fase 11: Ecosistema Móvil Certificado
-*   [ ] Extensión del modelo Zero Trust a dispositivos Android/iOS.
-*   [ ] Geocerca de seguridad (El asistente se bloquea si el móvil sale de un perímetro).
+* [ ] Integración de VectorDB local (Chroma/LanceDB) para búsqueda semántica.
+* [ ] Pipeline de ingesta de documentos local con validación Sentinel.
 
-### Fase 12: Nube Híbrida Zero-Knowledge
-*   [ ] Sincronización con Firebase usando cifrado de extremo a extremo (E2EE), donde solo el usuario tiene la llave.
+### Fase 25: Mobile Node & E2EE Cloud Sync
+
+* [ ] Sincronización cifrada (E2EE) con Firebase como puente de transporte.
+* [ ] Cliente móvil certificado con geocercas de seguridad.
 
 ---
 
 ## 📈 Métricas de Robustez
-*   **Surface Attack**: Reducida al mínimo mediante Tailscale.
-*   **Command Isolation**: 100% (Intercepción en Nodo Desktop).
-*   **Tool Authorization**: Manual y Determinista (Aduana MCP).
+
+* **Surface Attack**: Reducida al mínimo mediante Tailscale.
+* **Command Isolation**: 100% (Intercepción en Nodo Desktop).
+* **Data Sovereignty**: 100% (Local SQLite sin Cloud).
+* **Tool Authorization**: Manual y Determinista (Aduana MCP).

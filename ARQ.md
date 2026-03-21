@@ -7,8 +7,8 @@ Nexo utiliza una arquitectura distribuida basada en eventos para garantizar que 
 ```mermaid
 graph TD
     %% Canales de Entrada
-    Telegram[Cliente Telegram]
-    WS_Client[Cliente WebSocket]
+    Telegram[Cliente Telegram - Hermes]
+    NexoOS[Nexo OS Panel - React]
     
     %% Core Gateway
     Gateway[Gateway Central - Port 3000]
@@ -16,54 +16,59 @@ graph TD
     %% Engine
     Orchestrator[Orquestador de Agentes]
     LLM_Engine[Motor LLM con Failover]
+    Vault[Nexo Vault - OAuth]
     
     %% Nodos de Ejecución
     Desktop_Node[Desktop Node - Port 3001]
     
     %% Persistencia
+    DB[(Base de Datos SQLite - better-sqlite3)]
     FS[(FileSystem Local)]
-    DB[(Base de Datos SQLite)]
     
     %% Conexiones
     Telegram <--> Gateway
-    WS_Client <--> Gateway
+    NexoOS <--> Gateway
     Gateway <--> Orchestrator
     Orchestrator <--> LLM_Engine
+    Gateway <--> Vault
     Gateway <--> Desktop_Node
-    Gateway <--> FS
     Gateway <--> DB
+    Gateway <--> FS
 ```
 
 ## ⚙️ Especificaciones del Sistema
 
-### 1. Gateway Central (`src/core/gateway.ts`)
-- **Responsabilidad**: Punto de entrada único para todas las señales. Maneja el enrutamiento de mensajes entre canales y nodos.
-- **Protocolo**: WebSockets para tiempo real, HTTP para webhooks externos.
+### 1. Gateway Central (Hermes)
 
-### 2. Motor LLM con Failover Multi-Provider
-- **Primario**: Groq (Llama-3-70b/8b) para baja latencia (<500ms).
-- **Secundario**: OpenRouter (Claude 3.5 Sonnet / GPT-4o) para tareas complejas o cuando Groq alcanza rate limits.
-- **Lógica**: Si el proveedor A devuelve error o tarda más de 10s, el sistema reintenta automáticamente con el proveedor B manteniendo el historial exacto.
+- **Responsabilidad**: Punto de entrada único orquestado con **grammY**. Maneja el ciclo de vida de los mensajes y la persistencia de sesiones.
+- **Protocolo**: Webhooks con validación de tokens secretos, WebSockets para el panel.
 
-### 3. Persistencia de Datos (SQLite + FS)
-Nexo combina la flexibilidad del sistema de archivos con la robustez de una base de datos relacional:
-- **SQLite (`database.db`)**: Almacena datos estructurados como la configuración de usuarios, logs de eventos de alta frecuencia y relaciones entre agentes.
-- **FileSystem (`Sessions/`)**: Los hilos de conversación se guardan como archivos JSON independientes para facilitar la portabilidad y la inspección manual.
+### 2. Motor LLM (Brain)
 
-### 4. Desktop Node (`src/nodes/desktop-node.ts`)
-Para aumentar la seguridad, las tareas que requieren acceso directo al hardware (terminal, pantalla, archivos) se ejecutan en un proceso separado que se conecta al Gateway.
-- **Handshake**: Requiere un `NEXO_NODE_TOKEN`.
-- **Sandbox**: Las operaciones están restringidas por un motor de reglas de seguridad.
+- **Primario**: Groq (Llama-3.3-70b/8b) para baja latencia.
+- **Secundario**: OpenRouter (Claude 3.5 Sonnet / GPT-4o).
+- **Control**: Dashboard de monitoreo de latencia y failover proactivo.
 
-### 5. Sentinel (`src/security/sentinel.ts`)
-Un \"watchdog\" independiente que escanea los logs de auditoría en busca de:
-- Intención de ejecución de comandos prohibidos (`rm -rf`, `sudo`).
-- Accesos desde IPs no autorizadas.
-- Anomalías en el comportamiento de los agentes.
+### 3. Persistencia Soberana (SQLite)
+
+- **Motor**: `better-sqlite3` para acceso síncrono ultra-rápido.
+- **Schema**: Tablas unificadas para `sessions` y `messages`.
+- **Privacidad**: 100% Local, eliminando la necesidad de Firestore para datos sensibles.
+
+### 4. Nexo Vault (OAuth)
+
+- **Seguridad**: Sistema de almacenamiento cifrado para gestionar flujos de autenticación con servicios de Google, GitHub, etc.
+- **Aislamiento**: Los tokens nunca salen de la máquina local.
+
+### 5. Sentinel & Auditoría
+
+- **Sentinel**: Watchdog independiente que escanea logs en tiempo real detectando anomalías y escaladas de privilegios.
+- **Context Envelope**: Marcado de cada mensaje con metadata de origen para trazabilidad forense.
 
 ---
 
 ## 📂 Directorios del Proyecto
+
 ```text
 Asistente-Personal-Nexo/
 ├── .nexo_data/          # Almacén de datos persistentes (DB, Sesiones, Logs)

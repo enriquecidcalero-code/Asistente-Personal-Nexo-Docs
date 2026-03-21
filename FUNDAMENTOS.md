@@ -1,49 +1,71 @@
 # 🧠 Fundamentos Técnicos: Cómo funciona Nexo
 
-Este documento profundiza en la ingeniería detrás del **Asistente Personal Nexo (Open Gravity)**, explicando el funcionamiento interno de sus componentes core y sus recientes mejoras evolutivas.
+Este documento profundiza en la ingeniería de vanguardia detrás del **Asistente Personal Nexo (Open Gravity)**, detallando los subsistemas core y las mejoras de la Fase 21-23.
 
 ---
 
-## 🛰️ 1. Gateway Central: El Plano de Control
-El Gateway es una aplicación Node.js/TypeScript que actúa como el "sistema nervioso central".
-*   **Protocolo Híbrido**: Utiliza WebSockets (`ws`) para telemetría en tiempo real y comunicación bidireccional con los nodos, y un servidor HTTP para webhooks y APIs externas.
-*   **Gestión de Presencia**: Mantiene un registro de "Heartbeast" de todos los nodos conectados.
+## 🛰️ 1. Gateway Central (Hermes): El Plano de Control
 
-## 🤖 2. Motor LLM e Inteligencia Adaptativa
-Nexo no depende de un solo modelo. Su motor (`LLMEngine`) está diseñado para la resiliencia:
-*   **Failover Algorítmico**: Intento primario con **Groq** (baja latencia) y respaldo automático con **OpenRouter**.
-*   **Inyección Determinista de Herramientas**: El motor inyecta herramientas en el LLM con descripciones enriquecidas que fuerzan el uso de herramientas seguras (ej: prioriza MCP SQLite sobre comandos de terminal manuales).
+El Gateway es el orquestador principal del sistema, recientemente refactorizado para mayor resiliencia.
 
-## 🛡️ 3. Desktop Node: Ejecución Zero-Trust
-El nodo es el "músculo" que vive en el hardware del usuario. 
-*   **Handshake Certificado**: Intercambio de tokens asimétricos para establecer la confianza.
-*   **Intercepción Determinista**: Bloqueo proactivo de comandos peligrosos (`sudo`, `rm`, etc.) mediante un motor de reglas previo a la ejecución.
+* **Protocolo grammY**: Sustitución de Telegraf por grammY para un manejo superior de middlewares y sesiones.
+* **Answer Callback Instantáneo**: Intercepción global de callbacks para feedback inmediato al móvil (eliminación de lag visual).
+* **Throttler Proactivo**: Gestión automática de rate limits (30 msg/s global) y resolución autónoma del error 429.
 
-## 🧩 4. Orquestación y Enrutamiento de Intenciones
-Nexo utiliza un **Orquestador Heurístico** que decide qué especialista debe manejar cada tarea basándose en patrones de lenguaje natural y disponibilidad de nodos.
+### 🛡️ 1.1. Context Envelope & Trazabilidad (Phase 21.6)
 
-## 🔌 5. Extensión Segura via MCP (Model Context Protocol) - [MEJORADO v1.7.0]
-MCP es la "Aduana Universal" de herramientas. Las mejoras de la Fase 9 incluyen:
-*   **Instancias Efímeras (TTL)**: Los servidores MCP se activan bajo demanda y se auto-cierran tras 60s de inactividad, optimizando el consumo de RAM.
-*   **Interceptor DLP (DLP Sanitizer)**: Capa de protección de datos que desinfecta los argumentos enviados a herramientas externas para evitar fugas de información sensible.
-*   **Circuit Breaker**: Sistema de protección que aísla servidores MCP fallidos (ej. timeouts en Perplexity) para evitar la degradación del Gateway.
-*   **Network Guard**: Aplicación de políticas de salida (Egress Policies) para restringir las conexiones de las extensiones.
+Cada entrada de datos al sistema se normaliza mediante la interfaz `NexoMessageEnvelope`.
 
-## 👁️ 6. Sistema Sentinel 2.0: Vigilancia Vital - [MEJORADO v1.7.0]
-Sentinel ha evolucionado de un simple monitor de logs a un administrador de salud proactivo:
-*   **Motor de Reanimación (Auto-Heal)**: Si el Gateway falla en 3 chequeos consecutivos, Sentinel interviene: mata procesos huérfanos en el puerto 3000 y reinicia el sistema vía PM2 o arranque manual.
-*   **Anti-Ofuscación Avanzada**: Normalización de texto que detecta ataques camuflados (ej. `s u d o`, `p.a.s.s.w.d`).
-*   **Reporting VITAL**: Generación de informes de salud interactivos (`getSystemStatus`) con métricas de CPU, RAM y estado de todos los servicios PM2.
-*   **Knowledge Base de Amenazas**: Traduce alertas técnicas a lenguaje humano para el usuario de Telegram.
+* **Metadata de Origen**: UUID único para cada mensaje, identificación de proveedor (`TELEGRAM`), canal y hilo de conversación.
+* **Aislamiento de Memoria**: Segmentación de historial basado en claves compuestas (`provider_channel_thread`), previniendo cruces de contexto involuntarios.
 
 ---
 
-## 📂 Estructura de Datos (Persistencia)
-Nexo sigue una estructura estricta en el directorio raíz del usuario:
-*   `~/.nexo/workspace/sessions/`: Cada chat es un JSON cronológico.
-*   `~/.nexo/security/`: Almacenes de secretos, threat KB y listas blancas.
-*   `~/.nexo/.nexo_data/nexo.db`: Base de datos SQLite para memoria estructurada.
+## 🤖 2. Motor LLM e Inteligencia Adaptativa (Brain)
+
+El motor cognitivo de Nexo (`LLMEngine`) prioriza la velocidad y la fiabilidad.
+
+* **Failover Multi-Provider**: Intento primario con **Groq** (Llama-3.3-70b/8b) para baja latencia (<500ms) y respaldo automático con **OpenRouter** (Claude/GPT).
+* **Cerebro Morfológico**: El motor es consciente de sus herramientas de sesión y habilidades dinámicas, decidiendo proactivamente cuándo usar la terminal, el navegador o herramientas MCP.
 
 ---
 
-> El desarrollo de Nexo se basa en la robustez: el sistema está diseñado para autoprotegerse y auto-repararse.
+## 📀 3. Persistencia Soberana (SQLite Local) - [PHASE 21.5]
+
+Nexo ha pasado de una arquitectura basada en la nube a una **totalmente local**.
+
+* **Motor better-sqlite3**: Persistencia síncrona y de alto rendimiento.
+* **Independencia de Nube**: Eliminación completa de Firebase para el almacenamiento de sesiones y mensajes, garantizando que el asistente funcione al 100% sin conexión externa o configuración cloud compleja.
+* **Tablas Unificadas**: Estructura relacional para una recuperación eficiente de contextos de conversación masivos.
+
+---
+
+## 🔑 4. Nexo Vault: Gestor Centralizado de Secretos
+
+El sistema **Nexo Vault** actúa como el gestor de identidades y tokens OAuth.
+
+* **Centralización**: Control unificado de flujos de autenticación de terceros (Google, GitHub, ElevenLabs).
+* **Cifrado Local**: Los tokens se almacenan cifrados en el hardware del usuario, nunca se exponen en texto plano en el Gateway ni en el Panel.
+
+---
+
+## 🖥️ 5. Nexo OS Panel: Terminal Soberano v2.0
+
+La interfaz visual ha sido reconstruida íntegramente para ofrecer control total.
+
+* **Telemetría de Hardware**: Cálculo de CPU mediante deltas de ticks y RAM en tiempo real, sincronizando el estado físico de la máquina con la interfaz.
+* **Vistas Multidimensionales**: 7 nuevas secciones (Core, Brain, Agents, Lab, Sentinel, Config, Abaddon) para la supervisión granular del asistente.
+* **Dashboard Futurista**: Diseño de alta fidelidad con Glassmorphism y animaciones fluidas para una experiencia UX premium.
+
+---
+
+## 👁️ 6. Sistema Sentinel: Vigilancia Vital
+
+Sentinel es el guardián autónomo del sistema.
+
+* **Auto-Reanimación (Auto-Heal)**: Si detecta la caída de un servicio vital (Puerto 3000 o 3001), Sentinel mata procesos huérfanos y los reinicia de forma autónoma.
+* **Motor Forense**: Detección de intrusiones en logs en tiempo real y bloqueo de escalada de privilegios.
+
+---
+
+> El desarrollo de Nexo se basa en la robustez y la soberanía: el sistema está diseñado para ser indetectable, autoprotegido y 100% controlado por el usuario.

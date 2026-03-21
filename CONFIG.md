@@ -1,48 +1,66 @@
 # ⚙️ Guía de Configuración de Nexo
 
-Nexo utiliza variables de entorno para gestionar las conexiones con proveedores externos y la configuración de seguridad del Gateway.
+Nexo utiliza variables de entorno para gestionar las conexiones con proveedores externos, la persistencia local y la configuración de seguridad del Gateway.
+
+---
 
 ## 📄 Archivo `.env`
 
-Crea un archivo `.env` en la raíz del proyecto basándote en el siguiente esquema:
+Crea un archivo `.env` en la raíz del proyecto basándote en el siguiente esquema (puedes usar `.env.example` como plantilla):
 
 ```bash
-# Token de Telegram (@BotFather)
-TELEGRAM_TOKEN=tu_token_aqui
-
-# Proveedores de LLM
-GROQ_API_KEY=tu_llave_groq
-OPENROUTER_API_KEY=tu_llave_openrouter
-
-# Configuración del Gateway
+# --- NEXO CORE CONFIGURATION ---
 PORT=3000
+ADMIN_TELEGRAM_ID=tu_id_de_telegram_aqui
+TELEGRAM_TOKEN=tu_bot_token_aqui (de @BotFather)
 
-# Seguridad
-# Este código es el inicial para el handshake de emparejamiento.
-# Se recomienda usar uno generado aleatoriamente.
-PAIRING_CODE=123456
+# --- LLM PROVIDERS ---
+GROQ_API_KEY=tu_clave_de_groq_aqui (Llama 3.3)
+OPENROUTER_API_KEY=tu_clave_de_openrouter_aqui (Claude/GPT)
 
-# Nexo Node (Opcional si se usa Desktop Node)
-NEXO_NODE_TOKEN=token_seguro_para_nodos
+# --- MCP: SERVICE KEYS ---
+PERPLEXITY_API_KEY=tu_clave_perplexity
+FIRECRAWL_API_KEY=tu_clave_firecrawl
+ELEVENLABS_API_KEY=tu_clave_elevenlabs
+
+# --- PERSISTENCE (Soberanía de Datos) ---
+# Nexo prefiere SQLite para una persistencia 100% local y soberana.
+SQLITE_DB_PATH=./.nexo_data/nexo.db
+
+# --- SECURITY ---
+MCP_ALLOWLIST_PATH=./.nexo_data/security/mcp_allowlist.json
+DLP_STRICT_MODE=true (Previene la fuga de información sensible)
+
+# --- PHASE 23: NEXO OS PANEL ---
+WEBAPP_URL=http://localhost:5173 (O tu IP de Tailscale)
 ```
 
-## 📂 Directorios de Datos
+---
 
-Nexo crea y gestiona automáticamente una carpeta oculta de datos llamada `.nexo_data` (o `~/.nexo` dependiendo de la versión) que contiene:
+## 📂 Estructura de Datos (`.nexo_data/`)
 
-| Carpeta | Propósito |
+Nexo gestiona automáticamente una carpeta de datos persistentes que contiene el estado vital del sistema:
+
+| Directorio / Archivo | Propósito |
 | :--- | :--- |
-| `workspace/` | Almacena los IDs de Telegram autorizados y scripts de habilidades. |
-| `sessions/` | Historial de conversaciones cifrado y persistente. |
-| `logs/` | Registro de actividad para el sistema Sentinel. |
-| `security/` | Whitelists de herramientas MCP y tokens de confianza. |
+| `nexo.db` | Base de datos SQLite unificada para sesiones, mensajes y usuarios. |
+| `security/` | Contiene los listados de herramientas autorizadas (MCP Allowlist). |
+| `logs/` | Registro de actividad técnica y forense para Sentinel. |
+| `backups/` | (Próximamente) Copias de seguridad cifradas de la base de datos local. |
+
+---
 
 ## 🚀 Requisitos Técnicos
-- **Node.js**: Versión 20 o superior.
-- **pnpm**: Gestor de paquetes recomendado para mayor velocidad y ahorro de espacio.
-- **Internet**: Requerido para la conexión con los LLMs y Telegram (a menos que se usen modelos locales en el futuro).
 
-## 📡 Puertos por Defecto
-- **3000**: Gateway WebSocket principal.
-- **3001**: Puerto espejo para comunicaciones internas del Desktop Node.
-- **3002**: (Opcional) Puerto para webhooks entrantes de servicios externos.
+- **Node.js**: Versión 20 (LTS) o superior.
+- **SQLite**: No requiere instalación externa (usa `better-sqlite3` embebido).
+- **Red**: Recomendamos el uso de **Tailscale** para un acceso remoto seguro sin abrir puertos públicos.
+- **Gestor de Paquetes**: `pnpm` o `npm`.
+
+---
+
+## 📡 Arquitectura de Puertos
+
+- **3000**: Gateway Central de Hermes (WebSocket / Webhooks).
+- **3001**: API del Command Center para el Panel Nexo OS.
+- **5173**: Servidor de desarrollo de la Mini App (React / Vite).
