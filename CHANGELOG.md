@@ -1,3 +1,33 @@
+## [2.2.0] - 2026-03-31 (Fase 20 - Phalanx: Agente Blue Team y Defensa Activa)
+
+### Añadido
+- **Agente Phalanx (SOC Lead)**: Especialista en ciberseguridad defensiva, respuesta ante incidentes y análisis forense digital.
+- **Escudo Determinista (IPS Engine)**: Motor de prevención de intrusiones en tiempo real con `LogTailer`, `Rate-limiting` y `Signature Matching`.
+- **Integración Nativa con Firewall pf**: Automatización del bloqueo de IPs maliciosas mediante la inyección directa de reglas en el firewall de macOS (`pfctl`).
+- **Analista Forense SOC (IA)**: Clasificación inteligente de vectores de ataque y generación de reportes forenses estructurados en JSON.
+- **Protocolo de Juegos de Guerra (Wargames)**: Entorno controlado de simulación (Specter vs Phalanx) para la validación de la eficacia de las defensas.
+
+## [2.1.5] - 2026-03-22 (Fase 19 - Specter: Intrusión & Red Team)
+
+### Añadido
+- **Agente Specter (Offensive Expert)**: Auditor ofensivo local dedicado a la detección proactiva de vulnerabilidades y validación de seguridad (Pentesting).
+- **VulnerabilityScanner Determinista**: Herramientas integradas para ejecución de `Nmap`, auditoría de permisos de archivos sensibles (`stat`) y mapeo de superficie de ataque Docker.
+- **Reportes de "Banderas Rojas"**: Interfaz interactiva en Telegram con interpretación cognitiva de hallazgos técnicos y propuestas de remediación automatizadas.
+
+## [2.1.2] - 2026-03-22 (Fase 16 - Warden: Infraestructura Local & Synology)
+
+### Añadido
+- **Agente Warden (Expert)**: Especialista en la gestión de infraestructura crítica, redes locales seguras y almacenamiento masivo (NAS).
+- **NetworkMonitor Proactivo**: Vigilancia constante del túnel VPN (Tailscale/Wireguard) con alertas críticas ante desconexiones de red segura.
+- **Extensión SynologyClient**: Control total de la salud del hardware NAS, orquestación de Docker en Container Manager y actualizaciones críticas de DSM.
+- **Confirmación de Acciones Críticas**: Implementación de botones Inline de Telegram para la validación manual de acciones de alto impacto (reinicio de servidores, etc.).
+
+## [2.1.1] - 2026-03-22 (Fase 15 - Chronos: Ciclo de Vida & Poda de Datos)
+
+### Añadido
+- **Fase 15: Chronos Agent**: Especialista en la higiene del ecosistema; gestiona la rotación de logs técnica y la poda de la base de datos vectorial (VectorDB).
+- **Fase 15.1: WorkspaceManager**: Motor de aislamiento de entornos de trabajo (Sandboxing) que garantiza permisos Zero-Trust a nivel de sistema de archivos.
+
 ## [2.1.0] - 2026-03-21 (Fase 21.6 - Trazabilidad de Origen & Context Envelope)
 
 ### Añadido

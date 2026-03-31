@@ -1,81 +1,46 @@
-# 🌌 Nexo (Open Gravity) - Documentación Central
+# 📚 Nexo Documentation: Especificaciones y Plan Maestro
 
-> **El plano de control central para tu asistente personal de IA soberano.**
+Este repositorio contiene la **documentación técnica central** del ecosistema Nexo. Aquí se definen los requisitos (PRD), planos arquitectónicos (ARQ), planes de ejecución (PLAN) y normativas de seguridad que rigen el desarrollo del asistente.
 
-Bienvenido al repositorio oficial de documentación del **Asistente Personal Nexo (Open Gravity)**. Este proyecto es un sistema de orquestación de IA avanzado, diseñado para ejecutarse localmente proporcionando máxima privacidad, control y una arquitectura de confianza cero.
-
----
-
-## 🛡️ Filosofía de Desarrollo: Seguridad Total por Diseño
-
-A diferencia de otros asistentes que priorizan la funcionalidad y luego intentan "parchear" la seguridad, Nexo ha sido construido con una **mentalidad de Fortificado Progresivo**.
-
-Nuestra base estratégica ha sido:
-
-1. **Restricción Total (Fase 1)**: Comenzar en un entorno completamente sellado donde nada puede entrar ni salir sin autorización explícita (DM Pairing).
-2. **Base Robusta**: Crear un núcleo (Gateway) que no confía en nadie, ni siquiera en el nodo que ejecuta los comandos.
-3. **Apertura Controlada**: A medida que añadimos habilidades (Navegación, Audio, MCP), cada una pasa por una "aduana" de seguridad (Sentinel, Allowlists, Zod Validation) para asegurar que el sistema nunca pierda su integridad.
+![Doc Version](https://img.shields.io/badge/Doc-2.2.0-blue?style=for-the-badge)
+![Ecosystem](https://img.shields.io/badge/Ecosystem-Nexo-2563EB?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Phase_20_Ready-success?style=for-the-badge)
 
 ---
 
-## 🚀 Análisis Detallado de Fases
+## 🗺️ Mapa de Documentación
 
-Nexo ha evolucionado a través de múltiples hitos críticos, cada uno añadiendo una capa de blindaje e inteligencia:
+Para entender Nexo, navega a través de estos pilares fundamentales:
 
-### [Fase 1-5] El Sistema Nervioso y el Perímetro
-
-* **Seguridad**: Implementación del **DM Pairing** y **Tailscale Network Guard**.
-* **UX**: Primer Gateway WebSocket y **Live Canvas (A2UI)** para dashboard en tiempo real.
-* **Impacto**: Blindaje total contra extraños y visualización de datos estricta mediante Zod.
-
-### [Fase 6-9] Confianza Cero y Vigilancia Activa
-
-* **Seguridad**: Creación del **Desktop Node** (aislamiento de ejecución) y el módulo **Sentinel**.
-* **Inteligencia**: Integración de **MCP (Model Context Protocol)** bajo una aduana de seguridad (`allowlist.json`).
-* **Impacto**: Separación física de la "mente" y el "brazo", con monitorización pasiva 24/7.
-
-### [Fase 10-11] Gestión de Secretos y Salud Cognitiva
-
-* **Seguridad**: **Nexo Vault** para gestión centralizada y cifrada de tokens OAuth.
-* **Monitoreo**: Dashboard de **Brain Monitor** para seguimiento de latencias LLM y failover en tiempo real.
-* **Impacto**: Control total sobre las identidades externas y visibilidad del "pensamiento" del asistente.
-
-### [Fase 21] Hermes (UX de Alta Resiliencia)
-
-* **Infraestructura**: Migración íntegra a **grammY** con gestión avanzada de sesiones.
-* **Resiliencia**: Implementación de **Throttler** (30/s) y manejo automático del error 429 (Too Many Requests).
-* **UX**: Feedback instantáneo (Answer Callback) y edición in-situ de mensajes para una conversación fluida.
-
-### [Phase 21.5] Soberanía de Datos (Local SQLite)
-
-* **Persistencia**: Migración completa de Firebase a **SQLite Local** (`better-sqlite3`).
-* **Rendimiento**: Persistencia síncrona, de alto rendimiento y 100% privada sin dependencias externas de nube.
-* **Impacto**: Nexo ahora es un sistema **100% Autónomo** y distribuible sin necesidad de configuración Cloud.
-
-### [Phase 21.6] Trazabilidad y Contexto (Envelope)
-
-* **Protocolo**: Implementación de `NexoMessageEnvelope` para normalizar cada entrada con UUIDs y metadata de origen.
-* **Seguridad**: Aislamiento de memoria por hilo (`provider_channel_thread`) garantizando que no haya cruces de contexto.
-* **Auditoría**: Trazabilidad completa de agentes para análisis forenses precisas.
-
-### [Fase 22-23] Monitorización de Hardware y Terminal Soberano
-
-* **Telemetría**: Cálculo de CPU mediante deltas de ticks y RAM en tiempo real.
-* **UI/UX**: **Panel v2.0 (The Sovereign Terminal)** con 7 vistas multidimensionales (Core, Brain, Agents, Lab, Sentinel, Config, Abaddon).
-* **Impacto**: Una interfaz de usuario de grado militar para el control total de la infraestructura.
+| Documento | Propósito |
+| :--- | :--- |
+| **`[[PRD.md]]`** | **Product Requirements Document**: El "qué" y el "para qué" de cada función. |
+| **`[[ARQ.md]]`** | **Architecture Specification**: El "cómo" técnico, diagramas y stack. |
+| **`[[PLAN.md]]`** | **Master Plan**: Hoja de ruta detallada por fases y entregables. |
+| **`[[CHANGELOG.md]]`** | **Historial de Cambios**: Evolución cronológica del sistema de documentación. |
+| **`[[SECURITY.md]]`** | **Security Protocols**: Normas Zero-Trust y defensa perimetral. |
+| **`[[FUNDAMENTOS.md]]`** | **Core Principles**: Filosofía del proyecto y estandarización. |
+| **`[[CONFIG.md]]`** | **Deployment Guide**: Manual de instalación y orquestación. |
 
 ---
 
-## 🗺️ Guía de Documentación
+## 🚀 Fases Actuales en Documentación
 
-1. [**📋 PRD (Requisitos)**](PRD.md): Definición detallada, objetivos y visión del producto.
-2. [**🏗️ Arquitectura**](ARQ.md): Diagramas técnicos y stack tecnológico (Node/TS/pnpm).
-3. [**🧠 Fundamentos Técnicos**](FUNDAMENTOS.md): **[NUEVO]** Explicación profunda de la ingeniería: Gateway, Motores LLM, Failover y Lógica de Nodos.
-4. [**📅 Plan Maestro**](PLAN.md): Roadmap histórico y próximos hitos del proyecto.
-5. [**🔐 Seguridad**](SECURITY.md): El manual profundo de Sentinel, Node Protection y Pairing.
-6. [**📜 Changelog**](CHANGELOG.md): Historial de versiones y mejoras implementadas.
-7. [**🔌 Espec. Técnicas MCP**](MCP_TECH_SPEC.md): Arquitectura Model Context Protocol, Aduana Digital y Circuit Breakers.
+Actualmente, la documentación cubre hasta la **Fase 20 (Phalanx)**, detallando la infraestructura de defensa activa:
+
+- **🛡️ Warden (Fase 16)**: Infraestructura y Synology.
+- **🕵️ Specter (Fase 19)**: Auditoría Ofensiva / Red Team.
+- **⚔️ Phalanx (Fase 20)**: Blue Team / IPS / Firewall nativo macOS.
 
 ---
 
-*Documentación mantenida y evolucionada por Antigravity (IA).*
+## 🏛️ Estándares de Arquitectura (Nexo Standard)
+
+Toda la documentación sigue el estándar de **Soberanía Digital**:
+1. **Local-First**: Prioridad absoluta al procesamiento en el host local.
+2. **AI-Agnostic**: Diseñado para operar con cualquier LLM vía failover.
+3. **Deterministic First**: Las acciones críticas deben ser verificables mediante código Node.js nativo antes de usar inferencia de IA.
+
+---
+
+*Repositorio de mantenimiento documental para Kike Cid por Antigravity.*
