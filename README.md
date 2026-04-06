@@ -2,9 +2,9 @@
 
 Este repositorio contiene la **documentación técnica central** del ecosistema Nexo. Aquí se definen los requisitos (PRD), planos arquitectónicos (ARQ), planes de ejecución (PLAN) y normativas de seguridad que rigen el desarrollo del asistente.
 
-![Doc Version](https://img.shields.io/badge/Doc-2.2.0-blue?style=for-the-badge)
+![Doc Version](https://img.shields.io/badge/Doc-2.9.0-blue?style=for-the-badge)
 ![Ecosystem](https://img.shields.io/badge/Ecosystem-Nexo-2563EB?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Phase_20_Ready-success?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Phase_25_Ready-success?style=for-the-badge)
 
 ---
 
@@ -26,11 +26,15 @@ Para entender Nexo, navega a través de estos pilares fundamentales:
 
 ## 🚀 Fases Actuales en Documentación
 
-Actualmente, la documentación cubre hasta la **Fase 20 (Phalanx)**, detallando la infraestructura de defensa activa:
+Actualmente, la documentación cubre hasta la **Fase 25 (Bibliotecario & Obsidian RAG)**, detallando la infraestructura de memoria semántica y defensa:
 
 - **🛡️ Warden (Fase 16)**: Infraestructura y Synology.
 - **🕵️ Specter (Fase 19)**: Auditoría Ofensiva / Red Team.
 - **⚔️ Phalanx (Fase 20)**: Blue Team / IPS / Firewall nativo macOS.
+- **🚀 Infiltrado (Fase 22)**: Navegador Autónomo y Automatización Web.
+- **🧠 Memoria Semántica (Fase 23)**: Cortex Vectorial y SQLite-VSS.
+- **📄 DocOps (Fase 24)**: Documentación Inteligente y Generador de Arquitectura.
+- **📚 Bibliotecario (Fase 25)**: Integración con Obsidian y RAG Inteligente.
 
 ---
 

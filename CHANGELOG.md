@@ -1,3 +1,12 @@
+## [2.9.0] - 2026-04-06 (Fase 25 - Bibliotecario: Cerebro Digital & Obsidian RAG)
+
+### Añadido
+- **Fase 25: Bibliotecario & Obsidian RAG**: Implementación de navegación jerárquica en el Vault de Obsidian y sistema de lectura progresiva (L0-L2) para optimización de tokens.
+- **Fase 24: Nexo DocOps**: Automatización de la documentación técnica con `doc-generator.ts` y registro ADR estructurado para trazabilidad total.
+- **Fase 23: Memoria Semántica**: Integración de `sqlite-vss` para búsqueda vectorial local (Cortex Vectorial) garantizando privacidad Zero-Trust.
+- **Fase 22: El Infiltrado**: Módulo de automatización de navegador con Playwright para interactuar con servicios sin API pública.
+- **Fase 21: Resilience & Auto-Bootstrap**: Sistema de autocuración para infraestructura Docker (OrbStack) y Cortex Vectorial.
+
 ## [2.2.0] - 2026-03-31 (Fase 20 - Phalanx: Agente Blue Team y Defensa Activa)
 
 ### Añadido

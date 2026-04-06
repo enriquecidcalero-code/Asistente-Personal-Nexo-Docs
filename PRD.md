@@ -79,15 +79,25 @@ Nexo (Open Gravity) es un asistente de IA personal **local-first** diseñado par
 - Refactorización total a grammY.
 - Gestión de tráfico (Rate limits) y UX fluida con feedback instantáneo.
 
-### Fase 21.5: Migración Local (SQLite)
+### Fase 22: El Infiltrado (Navegador Autónomo)
 
-- Eliminación de dependencias de Firebase en favor de SQLite local.
-- Unificación de sesiones y mensajes en un motor de persistencia síncrono.
+- Orquestación de navegador en modo *headless* para interacción web proactiva.
+- Scraping inteligente y automatización de tareas en sitios sin API.
 
-### Fase 23: Soberanía Visual (Panel v2.0)
+### Fase 23: Memoria Semántica (Cortex Vectorial)
 
-- Visualización de telemetría de hardware real (CPU/RAM).
-- Dashboard multidimensional "The Sovereign Terminal" para control total del sistema.
+- Integración de SQLite-VSS para búsqueda vectorial local.
+- Clasificación semántica de documentos e historial de interacción.
+
+### Fase 24: Nexo DocOps (Trazabilidad)
+
+- Generación dinámica de diagramas arquitectónicos y documentación viva.
+- Sincronización automática de hitos y cambios técnicos.
+
+### Fase 25: Bibliotecario & Obsidian RAG
+
+- Integración profunda con el Vault de Obsidian para recuperación de conocimiento.
+- Sistema de lectura multinivel y optimización de contexto.
 
 ## 📐 Alcance del Sistema
 
